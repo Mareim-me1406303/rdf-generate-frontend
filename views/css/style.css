@@ -1,0 +1,65 @@
+body {
+    background-color: black;
+}
+.ExtractorContainer {
+    background-color: white;
+    border: 1px solid #3883fa;
+    overflow: scroll;
+    width: 49%;
+    height: 300px;
+    position: absolute;
+    top: 0px;
+    right: 8px;
+
+}
+
+.tr_style{
+    width: 50%;
+    margin-bottom: 3px;
+    margin-left: 3px;
+
+
+}
+
+.contentText {
+    font-family:'dejavu sans mono', 'droid sans mono', consolas, monaco, 'lucida console', 'courier new', courier, monospace, sans-serif;
+    font-size: 13px;
+    color: cadetblue;
+}
+
+#EntityTable{
+    margin-left:10px
+}
+
+.definitions{
+    color: orange;
+}
+
+#jsoneditor {
+    width:49%;
+    height: 300px;
+}
+
+#SampleResultTable{
+    margin-left:10px
+ }
+
+.SampleContainer{
+
+    background-color: white;
+    border: 1px solid #3883fa;
+    overflow:scroll;
+    width:49%;
+    height: 300px;
+    position: absolute;
+    top: 49%;
+    right: 8px;
+
+}
+
+.RDFbtn{
+    position: fixed;
+    top: 310px;
+    left: 50.5%;
+}
+

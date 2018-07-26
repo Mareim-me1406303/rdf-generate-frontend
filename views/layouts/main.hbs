@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link href="../../node_modules/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="../../node_modules/jsoneditor/dist/jsoneditor.min.js"></script>
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+<div class="container-fluid">
+    <body>
+    <div id="jsoneditor"></div>
+    <script>
+        // create the editor
+        var container = document.getElementById("jsoneditor");
+        var options = {
+            mode: 'code'
+
+        };
+        var editor = new JSONEditor(container, options);
+
+        // set json
+        var json = {
+            "Array": [1, 2, 3],
+            "Boolean": true,
+            "Null": null,
+            "Number": 123,
+            "Object": {"a": "b", "c": "d"},
+            "String": "Hello World"
+        };
+        editor.set(json);
+        // get json
+        var json = editor.get();
+    </script>
+
+    <div class="ExtractorContainer">
+        <tabe id="EntityTable">
+            {{#data}}
+                <tr>Entities:</tr>
+
+                {{#each entities}}
+                    <p>•</p>
+                    <div class="w3-container">
+                        <ul class="w3-ul w3-card-4">
+                            <li class="w3-display-container"><input class="contentText tr_style" type="text" value="{{iri_template}}"> <span onclick="this.parentElement.style.display='none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+                            <li class="w3-display-container"><input class="contentText tr_style" type="text" value="{{type}}"> <span onclick="this.parentElement.style.display='none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+                    {{#each include}}
+                            <li class="w3-display-container"><input class="contentText tr_style" type="text" value="{{this}}"> <span onclick="this.parentElement.style.display='none'" class="w3-button w3-transparent w3-display-right">&times;</span></li>
+                        {{/each}}
+                        </ul>
+                    </div>
+
+                    <li>Include [</li>
+                    {{#each include}}
+                        <li><input class="contentText tr_style" type="text" value="{{this}}"></li>
+                    {{/each}}]
+                {{/each}}
+                <input type="button" class="btn btn-info" style="position: relative; left: 8px" value="Add Entity">
+            </ul>
+            {{/data}}
+        </tabe>
+    </div>
+    <input type="submit" class="btn btn-info RDFbtn" value="Generate RDF">
+
+    <!--<div class="SampleContainer">-->
+    <!--<table id="SampleResultTable">-->
+    <!--</table>-->
+    <!--</div>-->
+
+
+    <!--to be used -->
+    <!--radio check-->
+    <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+    </div>
+    <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+    </div>
+
+    <!--for adding an attribute-->
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+        <div class="input-group-append">
+            <button class="btn btn-success" type="button">Love it</button>
+        </div>
+    </div>
+
+    <!--upload a file-->
+    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+
+    <!--success message -->
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Well done!</h4>
+        You successfully read this important alert message.
+    </div>
+
+
+    </body>
+</div>
+</html>
+
+
