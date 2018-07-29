@@ -63,3 +63,17 @@ body {
     left: 50.5%;
 }
 
+.dialog-header {
+    padding: 5px 5px;
+    font-size: 18px;
+    color: #245580;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+dialog {
+    width: 600px;
+    font-family:sans-serif;
+    padding: 5px 10px 20px 20px;
+}
+
