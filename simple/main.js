@@ -1,5 +1,8 @@
 
-let data;
+let des;
+let newDes;
+let filteredDes;
+let out;
 let editor;
 let cont;
 let step = 0;
@@ -28,12 +31,10 @@ function addTable(template, headerTemplate, content) {
     cont.innerHTML = Handlebars.compile(template)(content);
 }
 
-function addEntitiesTable() {
-    addTable(ENTITIES_TABLE_TEMPLATE, ENTITIES_HEADER_TEMPLATE, data.entities);
-}
+// ENTITIES ----------------------------------------------
 
-function addPropertiesTable() {
-    addTable(PROPERTIES_TABLE_TEMPLATE, PROPERTIES_HEADER_TEMPLATE, data.struct);
+function addEntitiesTable() {
+    addTable(ENTITIES_TABLE_TEMPLATE, ENTITIES_HEADER_TEMPLATE, des.entities);
 }
 
 async function addEntity() {
@@ -48,6 +49,8 @@ function closeEntityDialog() {
     document.querySelector('#entity-dialog').close();
 }
 
+// TODO: entity onchange
+
 function setEntityInput() {
     let json_path = document.getElementById('json_path');
     let include = document.getElementById('include');
@@ -60,7 +63,9 @@ function setEntityInput() {
     } catch (err) {
         inc = [include.value];
     }
-    data.entities[json_path.value] = {
+    if (!newDes) newDes = {};
+    if (!newDes.entities) newDes.entities = {};
+    newDes.entities[json_path.value] = {
         json_path: json_path.value,
         include: inc,
         type: type.value,
@@ -75,17 +80,56 @@ function appendEntityInclude(id) {
         += ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE('');
 }
 
+// PROPERIES ---------------------------------------------
+
+function addPropertiesTable() {
+    addTable(PROPERTIES_TABLE_TEMPLATE, PROPERTIES_HEADER_TEMPLATE, des.struct);
+}
+
+function checkPropObj() {
+    if (!filteredDes) filteredDes = {};
+    if (!filteredDes.entities) filteredDes.entities = (newDes || des).entities;
+    if (!filteredDes.struct) filteredDes.struct = {};
+}
+
+function setPropPrefixes() {
+    checkPropObj();
+    filteredDes.prefixes = {};
+    for (let k of Object.keys(filteredDes.struct)) {
+        let p = filteredDes.struct[k].suggested_predicates[0];
+        filteredDes.prefixes[p.prefix_name] = des.prefixes[p.prefix_name];
+    }
+}
+
+function onDataTypeChange(path) {
+    checkPropObj();
+    if (!filteredDes.struct[path])
+        filteredDes.struct[path] = {};
+    filteredDes.struct[path].data_types = [des.struct[path].data_types[document.getElementById(`${path}_data_types`).value]];
+}
+
+function onPredChange(path) {
+    checkPropObj();
+    if (!filteredDes.struct[path])
+        filteredDes.struct[path] = {};
+    filteredDes.struct[path].suggested_predicates = [des.struct[path].suggested_predicates[document.getElementById(`${path}_suggested_predicates`).value]];
+}
+
 async function next() {
     switch (step) {
     case 0:
-        data = await getDescriptor(editor.get()[0], undefined);
+        des = await getDescriptor(editor.get()[0], undefined);
         addEntitiesTable();
         break;
     case 1:
-        data = await getDescriptor(undefined, data);
+        des = await getDescriptor(undefined, newDes);
+        delete des.struct["$"];
         addPropertiesTable();
         break;
     case 2:
+        setPropPrefixes();
+        print(filteredDes);
+        // TODO: continue here
         break;
     }
     ++step;

@@ -90,13 +90,23 @@ const PROPERTIES_TABLE_TEMPLATE = `
             <li class="w3-display-container"><div class="paddingRL title">Path: {{@key}}</div></li>
             {{#if data_types}}
             <div class="paddingRL">Datatype:</div>
-            <li class="w3-display-container"><input class="contentText trStyle" type="text"
-                                                    value="{{data_types}}"></li>
+            <li class="w3-display-container">
+            <select class="selectpicker" id="{{@key}}_data_types" onchange="onDataTypeChange('{{@key}}')">
+            {{#each data_types}}
+                <option value="{{@index}}">{{this}}</option>
+            {{/each}}
+            </select>
+            </li>
             {{/if}}
             {{#if suggested_predicates}}
             <div class="paddingRL">RDF Predicate:</div>
-            <li class="w3-display-container"><input class="contentText trStyle" type="text"
-                                                    value="{{suggested_predicates}}"></li>
+            <li class="w3-display-container">
+            <select class="selectpicker" id="{{@key}}_suggested_predicates" onchange="onPredChange('{{@key}}')">
+            {{#each suggested_predicates}}
+                <option value="{{@index}}">{{prefix_name}}:{{predicate}}</option>
+            {{/each}}
+            </select>
+            </li>
             {{/if}}
         </ul><br>
     </div>

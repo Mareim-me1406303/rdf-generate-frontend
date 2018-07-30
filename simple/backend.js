@@ -1041,7 +1041,6 @@ ex:a
     a schem:Thing;
     n:name "ddd";
     <http://www.biopax.org/release/biopax-level3.owl#id#id> a.0.
-
 `;
 
 const FAKE_OUT_ONE = `
