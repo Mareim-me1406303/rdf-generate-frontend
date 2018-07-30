@@ -7,6 +7,6 @@
     "express": "latest",
     "express-handlebars": "latest",
     "fs-promise": "latest",
-    "jsoneditor": "^5.19.0"
+    "jsoneditor": "^5.19.1"
   }
 }

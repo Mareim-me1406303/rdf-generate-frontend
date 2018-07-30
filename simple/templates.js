@@ -31,7 +31,7 @@ const ADD_ENTITY_TEMPLATE = `
 
 const ENTITIES_HEADER_TEMPLATE = `
 <tr>
-    <div class="contentText" style="color: black">Entities:</div>
+    <div class="contentText paddingRL title" style="color: black">Entities:</div>
     <br>
 </tr>
 <div id="tableHolder"></div>
@@ -49,21 +49,22 @@ const ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE = v => `
 
 const ENTITIES_TABLE_TEMPLATE = `
 <div class="contentText" style="color: black">
-    {{#each entity as |value key|}}
+    {{#each this}}
     <div class="w3-container">
         <ul class="w3-ul w3-card-4 list-entities">
-            <br> Path: {{key}} <br>
-            <br>IRI template:
+            <li class="w3-display-container"><div class="paddingRL title">Path: {{@key}}</div></li>
+            <div class="paddingRL">IRI template:</div>
             <li class="w3-display-container"><input class="contentText trStyle" type="text"
                                                     value="{{iri_template}}"></li>
-            Type:
+            <div class="paddingRL">Type:</div>
             <li class="w3-display-container"><input class="contentText trStyle" type="text"
                                                     value="{{type}}"></li>
-            Inculde:{{#each include}}
+            <div class="paddingRL">Inculde:</div>
+            {{#each include}}
             ${ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE("{{this}}")}
             {{/each}}
-            <div id="append_{{key}}"></div>
-            <a id="addAttribute" class="btn btn-info" onclick="appendInclude('append_{{key}}')">
+            <div id="append_{{@key}}"></div>
+            <a id="addAttribute" class="btn btn-info" onclick="appendEntityInclude('append_{{@key}}')">
                 <i class="fa fa-plus"></i>+
                 {{! TODO: btn for adding to the include }}
             </a>
@@ -75,7 +76,7 @@ const ENTITIES_TABLE_TEMPLATE = `
 
 const PROPERTIES_HEADER_TEMPLATE = `
 <tr>
-    <div class="contentText" style="color: black">Properties:</div>
+    <div class="contentText paddingRL title" style="color: black">Properties:</div>
     <br>
 </tr>
 <div id="tableHolder"></div>
@@ -83,27 +84,20 @@ const PROPERTIES_HEADER_TEMPLATE = `
 
 const PROPERTIES_TABLE_TEMPLATE = `
 <div class="contentText" style="color: black">
-    {{#each entity as |value key|}}
+    {{#each this}}
     <div class="w3-container">
         <ul class="w3-ul w3-card-4 list-entities">
-            <br> Path: {{key}} <br>
-            <br>IRI template:
+            <li class="w3-display-container"><div class="paddingRL title">Path: {{@key}}</div></li>
+            {{#if data_types}}
+            <div class="paddingRL">Datatype:</div>
             <li class="w3-display-container"><input class="contentText trStyle" type="text"
-                                                    value="{{iri_template}}"></li>
-            Type:
+                                                    value="{{data_types}}"></li>
+            {{/if}}
+            {{#if suggested_predicates}}
+            <div class="paddingRL">RDF Predicate:</div>
             <li class="w3-display-container"><input class="contentText trStyle" type="text"
-                                                    value="{{type}}"></li>
-            Inculde:{{#each include}}
-            <li class="w3-display-container"><input class="contentText trStyle" type="text"
-                                                    value="{{this}}"> <span
-                    onclick="this.parentElement.style.display='none'"
-                    class="w3-button w3-transparent w3-display-right">&times;</span></li>
-            {{/each}}
-            <div id="append_{{key}}"></div>
-            <a id="addAttribute" class="btn btn-info" onclick="appendInclude('append_{{key}}')">
-                <i class="fa fa-plus"></i>+
-                {{! TODO: btn for adding to the include }}
-            </a>
+                                                    value="{{suggested_predicates}}"></li>
+            {{/if}}
         </ul><br>
     </div>
     {{/each}}

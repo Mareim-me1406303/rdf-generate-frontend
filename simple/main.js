@@ -22,10 +22,18 @@ function setupJsonEditor() {
     editor.set(FAKE_INPUT); // TODO: remove later (just for testing)
 }
 
-function addTable() {
-    let template = Handlebars.compile(ENTITIES_TABLE_TEMPLATE);
-    let entity = data.entities;
-    cont.innerHTML = template({entity});
+function addTable(template, headerTemplate, content) {
+    document.getElementById("entityTable").innerHTML = headerTemplate;
+    cont = document.getElementById("tableHolder");
+    cont.innerHTML = Handlebars.compile(template)(content);
+}
+
+function addEntitiesTable() {
+    addTable(ENTITIES_TABLE_TEMPLATE, ENTITIES_HEADER_TEMPLATE, data.entities);
+}
+
+function addPropertiesTable() {
+    addTable(PROPERTIES_TABLE_TEMPLATE, PROPERTIES_HEADER_TEMPLATE, data.struct);
 }
 
 async function addEntity() {
@@ -59,28 +67,26 @@ function setEntityInput() {
         iri_template: iri_template.value
     };
     closeEntityDialog();
-    addTable();
+    addEntitiesTable();
 }
 
-function appendInclude(id) {
-    let d = document.getElementById(id);
-    d.innerHTML += ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE('');
+function appendEntityInclude(id) {
+    document.getElementById(id).innerHTML
+        += ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE('');
 }
 
 async function next() {
     switch (step) {
-        case 0:
-            let t = document.getElementById("entityTable");
-            t.innerHTML = ENTITIES_HEADER_TEMPLATE;
-            cont = document.getElementById("tableHolder");
-            data = await getDescriptor(editor.get()[0], undefined);
-            addTable();
-            break;
-        case 1:
-            data = await getDescriptor(undefined, data);
-            break;
-        case 2:
-            break;
+    case 0:
+        data = await getDescriptor(editor.get()[0], undefined);
+        addEntitiesTable();
+        break;
+    case 1:
+        data = await getDescriptor(undefined, data);
+        addPropertiesTable();
+        break;
+    case 2:
+        break;
     }
     ++step;
 }

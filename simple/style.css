@@ -1,18 +1,19 @@
 
 #jsoneditor {
-    width: 49%;
-    height: 600px;
+    width: 49.5%;
+    height: 90%;
+    position: absolute;
+    left: 6px;
 }
 
 .desContainer {
-    background-color: white;
     border: 1px solid #3883fa;
     overflow: scroll;
-    width: 49%;
-    height: 600px;
+    width: 49.5%;
+    height: 90%;
     position: absolute;
     top: 0px;
-    right: 8px;
+    right: 6px;
 }
 
 .trStyle{
@@ -27,14 +28,23 @@
     color: cadetblue;
 }
 
+.title {
+    font-size: 20px;
+}
+
+.paddingRL {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
 #entityTable{
     margin-left: 10px
 }
 
 .nextBtn{
     position: absolute;
-    bottom: 70px;
-    right: 10px;
+    bottom: 4%;
+    right: 6px;
 }
 
 .dialogHeader {
