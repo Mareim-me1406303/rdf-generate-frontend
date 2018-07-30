@@ -21,9 +21,10 @@ class Repository {
         JsonData[0].entities[entity.json_path]=entity;
         this.fs.writeFile('data/data.json', JSON.stringify(JsonData));
     }
-    async addAttribute(attribute,json_path) {
+    async addAttribute(attribute) {
         let JsonData = await this.getData();
-        JsonData[0].entities[json_path]=entity;
+        const entity = this.getEntity(attribute.json_path)
+        entity.include.push(attribute.include);
         this.fs.writeFile('data/data.json', JSON.stringify(JsonData));
     }
 
@@ -31,7 +32,6 @@ class Repository {
         const data = await this.getData()
         const entity = data[0].entities[json_path];
         if (entity !== undefined) {
-            console.log(entity);
             return entity;
         }
         else {

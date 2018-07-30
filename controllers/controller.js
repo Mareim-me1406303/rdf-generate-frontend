@@ -38,8 +38,7 @@ class controller {
     async postAttribute(req, res) {
         try {
             const attribute = req.body
-            console.log(attribute)
-            await this.Repository.update(attribute)
+            await this.Repository.addAttribute(attribute)
             res.redirect("/app")
 
         }
@@ -52,7 +51,7 @@ class controller {
     async getEntity (req, res) {
         try {
             const json_path = req.params.json_path
-            console.log('req.params.json_path', json_path)
+            // console.log('req.params.json_path', json_path)
             const entity = await this.Repository.getEntity(json_path)
             console.log(JSON.stringify(entity, null, 2))
             res.json(entity)

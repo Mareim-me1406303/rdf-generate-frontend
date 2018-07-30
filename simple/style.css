@@ -1,24 +1,24 @@
-body {
-    background-color: black;
+
+#jsoneditor {
+    width: 49%;
+    height: 600px;
 }
-.ExtractorContainer {
+
+.desContainer {
     background-color: white;
     border: 1px solid #3883fa;
     overflow: scroll;
     width: 49%;
-    height: 300px;
+    height: 600px;
     position: absolute;
     top: 0px;
     right: 8px;
-
 }
 
-.tr_style{
+.trStyle{
     width: 50%;
     margin-bottom: 3px;
     margin-left: 3px;
-
-
 }
 
 .contentText {
@@ -27,43 +27,17 @@ body {
     color: cadetblue;
 }
 
-#EntityTable{
-    margin-left:10px
+#entityTable{
+    margin-left: 10px
 }
 
-.definitions{
-    color: orange;
-}
-
-#jsoneditor {
-    width:49%;
-    height: 300px;
-}
-
-#SampleResultTable{
-    margin-left:10px
- }
-
-.SampleContainer{
-
-    background-color: white;
-    border: 1px solid #3883fa;
-    overflow:scroll;
-    width:49%;
-    height: 300px;
+.nextBtn{
     position: absolute;
-    top: 49%;
-    right: 8px;
-
+    bottom: 70px;
+    right: 10px;
 }
 
-.RDFbtn{
-    position: fixed;
-    top: 310px;
-    left: 50.5%;
-}
-
-.dialog-header {
+.dialogHeader {
     padding: 5px 5px;
     font-size: 18px;
     color: #245580;
@@ -76,4 +50,3 @@ dialog {
     font-family:sans-serif;
     padding: 5px 10px 20px 20px;
 }
-

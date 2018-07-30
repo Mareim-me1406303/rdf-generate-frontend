@@ -781,9 +781,6 @@
         ],
         "type": "ee2",
         "iri_template": "https://example.com/{age}"
-      },
-      "undefined": {
-        "include": "ew"
       }
     }
   }

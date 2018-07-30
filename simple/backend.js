@@ -1,4 +1,4 @@
-data = JSON.parse(`[
+const FAKE_DES = JSON.parse(`
   {
     "prefixes": {
       "p0": "http://www.atelier12.it/ontoatelier12.owl",
@@ -781,10 +781,109 @@ data = JSON.parse(`[
         ],
         "type": "ee2",
         "iri_template": "https://example.com/{age}"
-      },
-      "undefined": {
-        "include": "ew"
       }
     }
   }
-]`);
+`);
+
+const FAKE_OUT = `
+@prefix ex: <https://example.com/>.
+@prefix schem: <http://schema.org/>.
+@prefix e: <https://example.com#>.
+@prefix XML: <http://www.w3.org/2001/XMLSchema#>.
+
+ex:1 a schem:Thing; e:id 1.0; e:name "aaa"; e:thing "nothing".
+
+ex:2 a schem:Thing; e:id 2.0; e:name "bbb".
+
+ex:2018-07-18 a schem:Thing; e:id 2018-07-18.0; e:name "eee".
+
+ex:21
+    a schem:Person;
+    e:age 21.0;
+    e:birthday "1997-03-28"^^XML:date;
+    e:followers ( );
+    e:id 0.0;
+    e:name "naheel";
+    e:test ex:91;
+    e:ttt "nothing";
+    e:working false.
+ex:3 a schem:Thing; e:id 3.0; e:name "ccc"; e:thing "nothing".
+
+ex:91 a schem:Person; e:age 91.0; e:id 3.0; e:name "nnnnnn".
+
+ex:a a schem:Thing; e:id a.0; e:name "ddd".
+`;
+
+const FAKE_INPUT = JSON.parse(`
+[
+  {
+    "id": 0,
+    "name": "Mariam",
+    "age": 21,
+    "birthday": "1997-03-28",
+    "working": true,
+    "test": {
+      "id": 3,
+      "name": "nnnnnn",
+      "age": 91
+    },
+    "ttt": {
+      "def": 123,
+      "ghi": 456
+    },
+    "followers": [
+      {
+        "name": "aaa",
+        "id": 1,
+        "thing": {
+          "a": "a"
+        }
+      },
+      {
+        "name": "bbb",
+        "id": 2
+      },
+      {
+        "name": "ccc",
+        "id": 3,
+        "thing": {
+          "a": "a"
+        }
+      },
+      {
+        "name": "ddd",
+        "id": "a"
+      },
+      {
+        "name": "eee",
+        "id": "2018-07-18"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Naheel"
+  }
+]
+`);
+
+/**
+ * Gives the full descriptor based on the descriptor modified by the user
+ * @param {Object} baseDescriptor - the descriptor modified by the user
+ * @param {Object} jsonElement - One element from the entire data
+ * @returns {Promise<Object>} - The complete descriptor
+ */
+async function getDescriptor(jsonElement, baseDescriptor) {
+    return FAKE_DES;
+}
+
+/**
+ * Generates the final output!
+ * @param {string} type - The type of the output (ttl or xml)
+ * @param {Object} fullJson - The entire json file. If undefined, then it will only output the result based on the given item from getDescriptorNoPredicates() function.
+ * @returns {Promise<string>} - The output!
+ */
+async function getOutput(type, fullJson) {
+    return FAKE_OUT;
+}

@@ -34,12 +34,14 @@ const AttributesFormTemplate = `
     <header class="dialog-header">
         <h1>{{dialogTitle}}</h1>
     </header>
-    <form method="post" action="/attribute">
+    <form method="post" action="/entities">
+    <input type="hidden" id="json_path" name="id" value="{{entities.json_path}}">
         <div class="form-group">
             <label for="include">Include</label>
             <input type="text" class="form-control" id="include" name="include"
         value="{{entities.include}}" required>
         </div>
+     
      
        
         <input type="submit" class="btn btn-primary">
@@ -64,7 +66,7 @@ function closeDialog() {
 }
 
 async function addAttribute(json_path) {
-    console.log("json_path", json_path)
+    // console.log("json_path", json_path)
     try {
         const entity = await fetchEntity(json_path)
 
