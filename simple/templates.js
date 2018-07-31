@@ -113,3 +113,7 @@ const PROPERTIES_TABLE_TEMPLATE = `
     {{/each}}
 </div>
 `;
+
+const FINAL_TEMPLATE = (des, out) => `
+
+`;

@@ -1043,55 +1043,6 @@ ex:a
     <http://www.biopax.org/release/biopax-level3.owl#id#id> a.0.
 `;
 
-const FAKE_OUT_ONE = `
-@prefix ex: <https://example.com/>.
-@prefix schem: <http://schema.org/>.
-@prefix n: <http://purl.org/ontology/wo/name#>.
-@prefix nor: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/northing#>.
-@prefix n0: <http://vocab.org/whisky/terms/age#>.
-@prefix dep: <http://xmlns.com/foaf/0.1/depiction#>.
-@prefix XML: <http://www.w3.org/2001/XMLSchema#>.
-
-ex:1
-    a schem:Thing;
-    nor:northing "nothing";
-    n:name "aaa";
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> 1.0.
-ex:2
-    a schem:Thing;
-    n:name "bbb";
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> 2.0.
-ex:2018-07-18
-    a schem:Thing;
-    n:name "eee";
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> 2018-07-18.0.
-ex:21
-    a schem:Person;
-    <http://contextus.net/ontology/ontomedia/core/expression#follows#follows>
-    ( );
-    n:name "Mariam";
-    n0:age 21.0;
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> 0.0;
-    <http://www.lingvoj.org/ontology#workingLanguage#workingLanguage> false;
-    <http://www.w3.org/ns/earl#test#test> ex:91;
-    dep:birthday "1997-03-28"^^XML:date.
-ex:3
-    a schem:Thing;
-    nor:northing "nothing";
-    n:name "ccc";
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> 3.0.
-ex:91
-    a schem:Person;
-    n:name "nnnnnn";
-    n0:age 91.0;
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> 3.0.
-ex:a
-    a schem:Thing;
-    n:name "ddd";
-    <http://www.biopax.org/release/biopax-level3.owl#id#id> a.0.
-
-`;
-
 /** TODO: implement getDescriptor
  * Gives the full descriptor based on the descriptor modified by the user
  * @param {Object} baseDescriptor - the descriptor modified by the user
@@ -1108,6 +1059,6 @@ async function getDescriptor(jsonElement, baseDescriptor) {
  * @param {Object} fullJson - The entire json file. If undefined, then it will only output the result based on the given item from getDescriptorNoPredicates() function.
  * @returns {Promise<string>} - The output!
  */
-async function getOutput(type, fullJson) {
-    return fullJson ? FAKE_OUT : FAKE_OUT_ONE;
+async function getOutput(type) {
+    return FAKE_OUT;
 }

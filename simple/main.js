@@ -19,7 +19,8 @@ async function main() {
 function setupJsonEditor() {
     let container = document.getElementById("jsoneditor");
     let options = {
-        mode: 'code'
+        mode: 'code',
+        theme: 'ace/theme/tomorrow_night_bright'
     };
     editor = new JSONEditor(container, options);
     editor.set(FAKE_INPUT); // TODO: remove later (just for testing)
@@ -33,8 +34,8 @@ function addTable(template, headerTemplate, content) {
 
 // ENTITIES ----------------------------------------------
 
-function addEntitiesTable() {
-    addTable(ENTITIES_TABLE_TEMPLATE, ENTITIES_HEADER_TEMPLATE, des.entities);
+function addEntitiesTable(e) {
+    addTable(ENTITIES_TABLE_TEMPLATE, ENTITIES_HEADER_TEMPLATE, e);
 }
 
 async function addEntity() {
@@ -72,7 +73,7 @@ function setEntityInput() {
         iri_template: iri_template.value
     };
     closeEntityDialog();
-    addEntitiesTable();
+    addEntitiesTable({...des.entities, ...newDes.entities});
 }
 
 function appendEntityInclude(id) {
@@ -115,21 +116,29 @@ function onPredChange(path) {
     filteredDes.struct[path].suggested_predicates = [des.struct[path].suggested_predicates[document.getElementById(`${path}_suggested_predicates`).value]];
 }
 
+// FINAL -------------------------------------------------
+
+function addFinalContainer() {
+
+}
+
 async function next() {
     switch (step) {
-    case 0:
+    case 0: // Entities
         des = await getDescriptor(editor.get()[0], undefined);
-        addEntitiesTable();
+        addEntitiesTable(des.entities);
         break;
-    case 1:
+    case 1: // Properties
         des = await getDescriptor(undefined, newDes);
         delete des.struct["$"];
         addPropertiesTable();
         break;
-    case 2:
+    case 2: // FINAL
         setPropPrefixes();
-        print(filteredDes);
-        // TODO: continue here
+        out = await getOutput();
+        addFinalContainer();
+        break;
+    case 3: // Reload
         break;
     }
     ++step;

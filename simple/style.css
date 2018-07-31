@@ -8,7 +8,7 @@
 
 .desContainer {
     border: 1px solid #3883fa;
-    overflow: scroll;
+    overflow-y: scroll;
     width: 49.5%;
     height: 90%;
     position: absolute;
