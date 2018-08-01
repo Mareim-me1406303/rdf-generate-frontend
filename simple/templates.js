@@ -1,3 +1,26 @@
+const THE_DRAMATIC_INTRO = `
+<div style='position: fixed; top: 30%'>
+    <h2>Insert a single generic object of your JSON</h2>
+    <br>
+    <div id="arrowAnim">
+      <div class="arrowSliding">
+        <div class="arrow"></div>
+      </div>
+      <div class="arrowSliding delay1">
+        <div class="arrow"></div>
+      </div>
+      <div class="arrowSliding delay2">
+        <div class="arrow"></div>
+      </div>
+      <div class="arrowSliding delay3">
+        <div class="arrow"></div>
+      </div>
+    </div>
+    <br><br>
+    <h2>and press NEXT</h2>
+</div>
+`;
+
 const ADD_ENTITY_TEMPLATE = `
 <header class="dialogHeader">
     <h1>{{dialogTitle}}</h1>
@@ -114,6 +137,23 @@ const PROPERTIES_TABLE_TEMPLATE = `
 </div>
 `;
 
-const FINAL_TEMPLATE = (des, out) => `
+const FINAL_HEADER_TEMPLATE = `
+<tr>
+    <div class="contentText paddingRL title" style="color: black">Descriptor and Output:</div>
+    <br>
+</tr>
+<div id="tableHolder"></div>
+`;
+
+const FINAL_TEMPLATE = out => `
+ <div class="w3-container" style="height:85%;width: 100%; position:absolute">
+            <div id="desEditor" class="w3-card-4" style="height:50%"></div>
+            <br>
+        <div id="outEditor" class="w3-card-4 contentText" style="height:50%; overflow-y: scroll; color: black ">${out.split("\n").join("<br>")}</div>
+        </div>
 
 `;
+
+
+
+

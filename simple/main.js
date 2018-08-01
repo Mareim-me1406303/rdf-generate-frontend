@@ -13,6 +13,7 @@ const print = s => console.log(s);
 
 async function main() {
     setupJsonEditor();
+    document.getElementById("entityTable").innerHTML = THE_DRAMATIC_INTRO;
 
 }
 
@@ -20,7 +21,7 @@ function setupJsonEditor() {
     let container = document.getElementById("jsoneditor");
     let options = {
         mode: 'code',
-        theme: 'ace/theme/tomorrow_night_bright'
+        // theme: 'ace/theme/tomorrow_night_bright'
     };
     editor = new JSONEditor(container, options);
     editor.set(FAKE_INPUT); // TODO: remove later (just for testing)
@@ -81,7 +82,7 @@ function appendEntityInclude(id) {
         += ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE('');
 }
 
-// PROPERIES ---------------------------------------------
+// PROPERTIES ---------------------------------------------
 
 function addPropertiesTable() {
     addTable(PROPERTIES_TABLE_TEMPLATE, PROPERTIES_HEADER_TEMPLATE, des.struct);
@@ -118,8 +119,13 @@ function onPredChange(path) {
 
 // FINAL -------------------------------------------------
 
-function addFinalContainer() {
-
+function addFinalContainer(out) {
+    document.getElementById("entityTable").innerHTML = FINAL_HEADER_TEMPLATE;
+    document.getElementById("tableHolder").innerHTML = FINAL_TEMPLATE(out);
+    let desEditor = new JSONEditor(document.getElementById("desEditor"), {
+        mode: "code"
+    });
+    desEditor.set(filteredDes);
 }
 
 async function next() {
@@ -135,8 +141,9 @@ async function next() {
         break;
     case 2: // FINAL
         setPropPrefixes();
-        out = await getOutput();
-        addFinalContainer();
+        out = await getOutput("ttl");
+        print(out);
+        addFinalContainer(out);
         break;
     case 3: // Reload
         break;
