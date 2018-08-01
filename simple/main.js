@@ -2,9 +2,9 @@
 let des;
 let newDes;
 let filteredDes;
+
 let out;
 let editor;
-let cont;
 let step = 0;
 
 main();
@@ -12,25 +12,38 @@ main();
 const print = s => console.log(s);
 
 async function main() {
+    document.getElementById("prevBtn").style.display = "none";
     setupJsonEditor();
     document.getElementById("entityTable").innerHTML = THE_DRAMATIC_INTRO;
+}
 
+function createEditor(container) {
+    let editor = ace.edit(container);
+    editor.setTheme("ace/theme/ambiance");
+    editor.session.setMode("ace/mode/xml");
+    editor.session.setOption("useWorker", false);
+    editor.setReadOnly(true);
+    return editor;
+}
+
+function createJsonEditor(container) {
+    let editor = createEditor(container);
+    editor.session.setMode("ace/mode/json");
+    editor.session.setOption("useWorker", true);
+    editor.setReadOnly(false);
+    editor.set = s => editor.setValue(JSON.stringify(s, null, 2), 1);
+    editor.get = () => JSON.parse(editor.getValue());
+    return editor;
 }
 
 function setupJsonEditor() {
-    let container = document.getElementById("jsoneditor");
-    let options = {
-        mode: 'code',
-        // theme: 'ace/theme/tomorrow_night_bright'
-    };
-    editor = new JSONEditor(container, options);
+    editor = createJsonEditor("jsoneditor");
     editor.set(FAKE_INPUT); // TODO: remove later (just for testing)
 }
 
 function addTable(template, headerTemplate, content) {
     document.getElementById("entityTable").innerHTML = headerTemplate;
-    cont = document.getElementById("tableHolder");
-    cont.innerHTML = Handlebars.compile(template)(content);
+    document.getElementById("tableHolder").innerHTML = Handlebars.compile(template)(content);
 }
 
 // ENTITIES ----------------------------------------------
@@ -85,7 +98,19 @@ function appendEntityInclude(id) {
 // PROPERTIES ---------------------------------------------
 
 function addPropertiesTable() {
-    addTable(PROPERTIES_TABLE_TEMPLATE, PROPERTIES_HEADER_TEMPLATE, des.struct);
+    // Grouping the properties under the entities
+    let e = Object.assign({}, des.entities);
+    let s = Object.assign({}, des.struct);
+    for (let base of Object.keys(e)) {
+        if (!e[base].properties) e[base].properties = {};
+        for (let p of Object.keys(s)) {
+            if (s[p] && p.startsWith(base)) {
+                e[base].properties[p] = s[p];
+                s[p] = undefined;
+            }
+        }
+    }
+    addTable(PROPERTIES_TABLE_TEMPLATE, PROPERTIES_HEADER_TEMPLATE, e);
 }
 
 function checkPropObj() {
@@ -121,32 +146,59 @@ function onPredChange(path) {
 
 function addFinalContainer(out) {
     document.getElementById("entityTable").innerHTML = FINAL_HEADER_TEMPLATE;
-    document.getElementById("tableHolder").innerHTML = FINAL_TEMPLATE(out);
-    let desEditor = new JSONEditor(document.getElementById("desEditor"), {
-        mode: "code"
-    });
-    desEditor.set(filteredDes);
+    document.getElementById("tableHolder").innerHTML = FINAL_TEMPLATE;
+    createJsonEditor("desEditor").set(filteredDes);
+    createEditor("outEditor").setValue(out, 1);
 }
 
 async function next() {
     switch (step) {
     case 0: // Entities
+        document.getElementById("prevBtn").style.display = "inline-block";
+        document.getElementById("desContainer").style["overflow-y"] = "scroll";
         des = await getDescriptor(editor.get()[0], undefined);
         addEntitiesTable(des.entities);
         break;
     case 1: // Properties
-        des = await getDescriptor(undefined, newDes);
+        if (newDes)
+            des.entities = {...des.entities, ...newDes.entities};
+        des = await getDescriptor(undefined, des);
         delete des.struct["$"];
         addPropertiesTable();
         break;
     case 2: // FINAL
+        document.getElementById("desContainer").style["overflow-y"] = "hidden";
+        document.getElementById("nextBtn").innerHTML = "CONVERT";
+        document.getElementById("finalDestination").innerHTML = FINAL_STUFF;
+        let formatRadioBtns = document.getElementsByName("formatRadio");
+        for (let b of formatRadioBtns) {
+            b.onclick = async () => {
+                out = await getOutput(formatRadioBtns[0].checked ? "ttl" : "xml");
+                addFinalContainer(out);
+            };
+        }
         setPropPrefixes();
         out = await getOutput("ttl");
-        print(out);
         addFinalContainer(out);
         break;
     case 3: // Reload
         break;
     }
     ++step;
+}
+
+async function prev() {
+    /*--step;
+    switch (step) {
+    case 0: // Entities
+        document.getElementById("prevBtn").style.display = "none";
+        addEntitiesTable(newDes);
+        break;
+    case 1: // Properties
+        addPropertiesTable();
+        break;
+    case 2: // FINAL
+        document.getElementById("nextBtn").innerHTML = "NEXT";
+        break;
+    }*/
 }

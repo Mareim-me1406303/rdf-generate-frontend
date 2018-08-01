@@ -1,18 +1,25 @@
+body {
+    background-color: #171717;
+    color: white;
+}
+
+th {
+    font-weight: normal;
+}
 
 #jsoneditor {
     width: 49.5%;
-    height: 90%;
+    height: 80%;
     position: absolute;
     left: 6px;
 }
 
-.desContainer {
-    border: 1px solid #3883fa;
-    overflow-y: scroll;
+#desContainer {
+    border: 1px;
+    overflow-y: hidden;
     width: 49.5%;
-    height: 90%;
+    height: 80%;
     position: absolute;
-    top: 0px;
     right: 6px;
 }
 
@@ -25,7 +32,6 @@
 .contentText {
     font-family:'dejavu sans mono', 'droid sans mono', consolas, monaco, 'lucida console', 'courier new', courier, monospace, sans-serif;
     font-size: 13px;
-    color: cadetblue;
 }
 
 .title {
@@ -41,7 +47,7 @@
     margin-left: 10px
 }
 
-.nextBtn{
+#btnsDiv {
     position: absolute;
     bottom: 4%;
     right: 6px;
@@ -74,7 +80,7 @@ dialog {
     width: 2vw;
     height: 2vw;
     border: 0.7vw solid;
-    border-color: black transparent transparent black;
+    border-color: white transparent transparent white;
     transform: rotate(-45deg);
 }
 

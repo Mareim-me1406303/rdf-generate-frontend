@@ -1043,6 +1043,58 @@ ex:a
     <http://www.biopax.org/release/biopax-level3.owl#id#id> a.0.
 `;
 
+const FAKE_OUT_XML = `
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:ex="https://example.com#">
+    <rdf:Description rdf:about="https://example.com/91">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <ex:age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">91</ex:age>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3</ex:id>
+        <ex:name>nnnnnn</ex:name>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://example.com/1">
+        <rdf:type rdf:resource="http://schema.org/Thing"/>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1</ex:id>
+        <ex:name>aaa</ex:name>
+        <ex:thing>nothing</ex:thing>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://example.com/2">
+        <rdf:type rdf:resource="http://schema.org/Thing"/>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2</ex:id>
+        <ex:name>bbb</ex:name>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://example.com/3">
+        <rdf:type rdf:resource="http://schema.org/Thing"/>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3</ex:id>
+        <ex:name>ccc</ex:name>
+        <ex:thing>nothing</ex:thing>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://example.com/a">
+        <rdf:type rdf:resource="http://schema.org/Thing"/>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">a</ex:id>
+        <ex:name>ddd</ex:name>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://example.com/2018-07-18">
+        <rdf:type rdf:resource="http://schema.org/Thing"/>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2018-07-18</ex:id>
+        <ex:name>eee</ex:name>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://example.com/21">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <ex:age rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">21</ex:age>
+        <ex:birthday rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1997-03-28</ex:birthday>
+        <ex:followers rdf:parseType="Collection">
+            </ex:followers>
+        <ex:id rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0</ex:id>
+        <ex:name>naheel</ex:name>
+        <ex:test rdf:resource="https://example.com/91"/>
+        <ex:ttt>nothing</ex:ttt>
+        <ex:working rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ex:working>
+    </rdf:Description>
+</rdf:RDF>
+`;
+
 /** TODO: implement getDescriptor
  * Gives the full descriptor based on the descriptor modified by the user
  * @param {Object} baseDescriptor - the descriptor modified by the user
@@ -1060,5 +1112,5 @@ async function getDescriptor(jsonElement, baseDescriptor) {
  * @returns {Promise<string>} - The output!
  */
 async function getOutput(type) {
-    return FAKE_OUT;
+    return type === "ttl" ? FAKE_OUT : FAKE_OUT_XML;
 }

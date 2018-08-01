@@ -1,36 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>ACE in Action</title>
-        <style type="text/css" media="screen">
-         #editor {
-             position: absolute;
-             top: 0;
-             right: 0;
-             bottom: 0;
-             left: 0;
-         }
-        </style>
 
+<head>
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+        <!-- Bootstrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+</head>
 
-        <!-- JSON Editor -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.19.1/jsoneditor.min.css" rel="stylesheet" type="text/css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.19.1/jsoneditor.min.js"></script>
-        <script src="https://unpkg.com/brace@0.10.0/theme/tomorrow_night_bright.js"></script>
-    </head>
-    <body>
+<body>
 
-        <div style="height:70%;width: 50%; position:absolute; overflow: auto>">
-            <div id="desEditor" style="height:50%"></div>
-            <br>
-        <div id="outEditor" style="height:50%; border: 1px solid #3883fa; ">dasfsdfsdfsd</div>
-        </div>
+    
 
-        <script>
-         let desEditor = new JSONEditor(document.getElementById("desEditor"), {
-             mode: "code"
-         });
-        </script>
-    </body>
+</body>
+
 </html>

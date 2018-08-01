@@ -1,5 +1,5 @@
 const THE_DRAMATIC_INTRO = `
-<div style='position: fixed; top: 30%'>
+<div style='position: fixed; top: 30%; padding: 10px'>
     <h2>Insert a single generic object of your JSON</h2>
     <br>
     <div id="arrowAnim">
@@ -54,7 +54,7 @@ const ADD_ENTITY_TEMPLATE = `
 
 const ENTITIES_HEADER_TEMPLATE = `
 <tr>
-    <div class="contentText paddingRL title" style="color: black">Entities:</div>
+    <div class="contentText paddingRL title">Entities:</div>
     <br>
 </tr>
 <div id="tableHolder"></div>
@@ -64,23 +64,23 @@ const ENTITIES_HEADER_TEMPLATE = `
 `;
 
 const ENTITIES_TABLE_INCLUDE_ITEM_TEMPLATE = v => `
-<li class="w3-display-container"><input class="contentText trStyle" type="text"
+<li class="w3-display-container"><input class="contentText trStyle form-control" type="text"
                                                     value="${v}"> <span
                     onclick="this.parentElement.style.display='none'"
                     class="w3-button w3-transparent w3-display-right">&times;</span></li>
 `;
 
 const ENTITIES_TABLE_TEMPLATE = `
-<div class="contentText" style="color: black">
+<div class="contentText">
     {{#each this}}
     <div class="w3-container">
         <ul class="w3-ul w3-card-4 list-entities">
             <li class="w3-display-container"><div class="paddingRL title">Path: {{@key}}</div></li>
             <div class="paddingRL">IRI template:</div>
-            <li class="w3-display-container"><input class="contentText trStyle" type="text"
+            <li class="w3-display-container"><input class="contentText trStyle form-control" type="text"
                                                     value="{{iri_template}}"></li>
             <div class="paddingRL">Type:</div>
-            <li class="w3-display-container"><input class="contentText trStyle" type="text"
+            <li class="w3-display-container"><input class="contentText trStyle form-control" type="text"
                                                     value="{{type}}"></li>
             <div class="paddingRL">Inculde:</div>
             {{#each include}}
@@ -99,61 +99,90 @@ const ENTITIES_TABLE_TEMPLATE = `
 
 const PROPERTIES_HEADER_TEMPLATE = `
 <tr>
-    <div class="contentText paddingRL title" style="color: black">Properties:</div>
+    <div class="contentText paddingRL title">Properties:</div>
     <br>
 </tr>
 <div id="tableHolder"></div>
 `;
 
 const PROPERTIES_TABLE_TEMPLATE = `
-<div class="contentText" style="color: black">
+<div class="contentText">
     {{#each this}}
     <div class="w3-container">
-        <ul class="w3-ul w3-card-4 list-entities">
-            <li class="w3-display-container"><div class="paddingRL title">Path: {{@key}}</div></li>
-            {{#if data_types}}
-            <div class="paddingRL">Datatype:</div>
-            <li class="w3-display-container">
-            <select class="selectpicker" id="{{@key}}_data_types" onchange="onDataTypeChange('{{@key}}')">
-            {{#each data_types}}
-                <option value="{{@index}}">{{this}}</option>
-            {{/each}}
-            </select>
+        <ul class="w3-ul w3-card-4 list-entities paddingRL">
+            <div class="title">{{@key}}</div>
+
+            {{#each properties}}
+            <li>
+            <b>Path: {{@key}}</b>
+
+            <table style="width: 100%">
+            <tr>
+                <th style="width: 50%">RDF Predicates</th>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                {{#if data_types}}
+                <th style="width: 50%">Datatype</th>
+                {{else}}
+                <th style="width: 50%">&nbsp;&nbsp;&nbsp;</th>
+                {{/if}}
+            </tr>
+            <tr>
+                <td>
+                <select class="form-control" style="margin-bottom: 10px; margin-right: 10px">
+                {{#each suggested_predicates}}
+                    <option value="{{@index}}">{{prefix_name}}:{{predicate}}</option>
+                {{/each}}
+                </select>
+                </td>
+                <td></td>
+                <td>
+                {{#if data_types}}
+                <select class="form-control" style="margin-bottom: 10px">
+                {{#each data_types}}<option value="{{@index}}">{{this}}</option>{{/each}}
+                </select>
+                {{/if}}
+                </td>
+            </tr>
+            </table>
             </li>
-            {{/if}}
-            {{#if suggested_predicates}}
-            <div class="paddingRL">RDF Predicate:</div>
-            <li class="w3-display-container">
-            <select class="selectpicker" id="{{@key}}_suggested_predicates" onchange="onPredChange('{{@key}}')">
-            {{#each suggested_predicates}}
-                <option value="{{@index}}">{{prefix_name}}:{{predicate}}</option>
             {{/each}}
-            </select>
-            </li>
-            {{/if}}
-        </ul><br>
+
+        </ul>
+        <br>
     </div>
     {{/each}}
 </div>
 `;
 
 const FINAL_HEADER_TEMPLATE = `
-<tr>
-    <div class="contentText paddingRL title" style="color: black">Descriptor and Output:</div>
-    <br>
-</tr>
 <div id="tableHolder"></div>
 `;
 
-const FINAL_TEMPLATE = out => `
- <div class="w3-container" style="height:85%;width: 100%; position:absolute">
+const FINAL_TEMPLATE = `
+ <div class="w3-container" style="height:80%; width: 100%; position:absolute">
+    <div class="contentText paddingRL title">Descriptor:</div>
+    <br>
             <div id="desEditor" class="w3-card-4" style="height:50%"></div>
             <br>
-        <div id="outEditor" class="w3-card-4 contentText" style="height:50%; overflow-y: scroll; color: black ">${out.split("\n").join("<br>")}</div>
+    <div class="contentText paddingRL title">Output:</div>
+    <br>
+        <div id="outEditor" class="w3-card-4" style="height:50%;"></div>
         </div>
 
 `;
 
-
+const FINAL_STUFF = `
+<table>
+    <td><b>Output format:</b>&nbsp&nbsp<br>&nbsp</td>
+    <td>
+    <label class="radio-inline"><input type="radio" name="formatRadio" checked>TURTLE</label>
+    <br>
+    <label class="radio-inline"><input type="radio" name="formatRadio">RDF/XML</label>
+    </td>
+    <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+    <td><input id="fileUploader" type="file" class="form-control-file"></td>
+    <td><button id="upload" type="button" class="btn btn-info">UPLOAD</button></td>
+</table>
+`;
 
 
