@@ -5,7 +5,10 @@ let filteredDes;
 
 let out;
 let editor;
+
+let screens = [];
 let step = 0;
+const STEPS = 4;
 
 main();
 
@@ -152,24 +155,47 @@ function addFinalContainer(out) {
 }
 
 async function next() {
-    switch (step) {
-    case 0: // Entities
+    if (step < STEPS) ++step;
+    await setStep(step);
+}
+
+async function prev() {
+    if (step > 0) --step;
+    await setStep(step);
+}
+
+async function setStep(i) {
+    switch (i) {
+    case 0:
+        document.getElementById("nextBtn").innerHTML = "NEXT";
+        document.getElementById("prevBtn").style.display = "none";
+        document.getElementById("finalDestination").innerHTML = "";
+        document.getElementById("entityTable").innerHTML = THE_DRAMATIC_INTRO;
+        break;
+    case 1: // Entities
+        document.getElementById("nextBtn").innerHTML = "NEXT";
         document.getElementById("prevBtn").style.display = "inline-block";
+        document.getElementById("finalDestination").innerHTML = "";
         document.getElementById("desContainer").style["overflow-y"] = "scroll";
         des = await getDescriptor(editor.get()[0], undefined);
         addEntitiesTable(des.entities);
         break;
-    case 1: // Properties
+    case 2: // Properties
+        document.getElementById("nextBtn").innerHTML = "NEXT";
+        document.getElementById("prevBtn").style.display = "inline-block";
+        document.getElementById("finalDestination").innerHTML = "";
+        document.getElementById("desContainer").style["overflow-y"] = "scroll";
         if (newDes)
             des.entities = {...des.entities, ...newDes.entities};
         des = await getDescriptor(undefined, des);
         delete des.struct["$"];
         addPropertiesTable();
         break;
-    case 2: // FINAL
-        document.getElementById("desContainer").style["overflow-y"] = "hidden";
+    case 3: // FINAL
         document.getElementById("nextBtn").innerHTML = "CONVERT";
+        document.getElementById("prevBtn").style.display = "inline-block";
         document.getElementById("finalDestination").innerHTML = FINAL_STUFF;
+        document.getElementById("desContainer").style["overflow-y"] = "hidden";
         let formatRadioBtns = document.getElementsByName("formatRadio");
         for (let b of formatRadioBtns) {
             b.onclick = async () => {
@@ -181,24 +207,7 @@ async function next() {
         out = await getOutput("ttl");
         addFinalContainer(out);
         break;
-    case 3: // Reload
+    case 4: // TODO Convert
         break;
     }
-    ++step;
-}
-
-async function prev() {
-    /*--step;
-    switch (step) {
-    case 0: // Entities
-        document.getElementById("prevBtn").style.display = "none";
-        addEntitiesTable(newDes);
-        break;
-    case 1: // Properties
-        addPropertiesTable();
-        break;
-    case 2: // FINAL
-        document.getElementById("nextBtn").innerHTML = "NEXT";
-        break;
-    }*/
 }
