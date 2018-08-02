@@ -1,6 +1,6 @@
 body {
     background-color: #171717;
-    color: white;
+    color: #cecece;
 }
 
 th {
@@ -27,6 +27,8 @@ th {
     width: 50%;
     margin-bottom: 3px;
     margin-left: 3px;
+    background-color: #171717;
+    color: #cecece;
 }
 
 .contentText {
@@ -117,3 +119,8 @@ dialog {
 }
 
 /* THE DRAMATIC ARROW (END) */
+
+.bkgStyle {
+    background-color: #171717;
+    color: #cecece;
+}

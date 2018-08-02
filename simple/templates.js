@@ -128,7 +128,7 @@ const PROPERTIES_TABLE_TEMPLATE = `
             </tr>
             <tr>
                 <td>
-                <select class="form-control" style="margin-bottom: 10px; margin-right: 10px">
+                <select class="form-control bkgStyle " style="margin-bottom: 10px; margin-right: 10px">
                 {{#each suggested_predicates}}
                     <option value="{{@index}}">{{prefix_name}}:{{predicate}}</option>
                 {{/each}}
@@ -137,7 +137,7 @@ const PROPERTIES_TABLE_TEMPLATE = `
                 <td></td>
                 <td>
                 {{#if data_types}}
-                <select class="form-control" style="margin-bottom: 10px">
+                <select class="form-control bkgStyle" style="margin-bottom: 10px">
                 {{#each data_types}}<option value="{{@index}}">{{this}}</option>{{/each}}
                 </select>
                 {{/if}}
