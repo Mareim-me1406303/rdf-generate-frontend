@@ -28,23 +28,28 @@ const ADD_ENTITY_TEMPLATE = `
 <form>
     <div class="form-group">
         <label for="json_path">Json path</label>
-        <input type="text" class="form-control" id="json_path" name="json_path"
+        <input type="text" class="form-control bkgStyle" id="json_path" name="json_path"
                value="{{entities.json_path}}" required>
     </div>
     <div class="form-group">
-        <label for="include">Include</label>
-        <input type="text" class="form-control" id="include" name="include"
-               value="{{entities.include}}" required>
-    </div>
-    <div class="form-group">
-        <label for="type">Type</label>
-        <input type="text" class="form-control" id="type" name="type"
-               value="{{entities.type}}" required>
+        <label for="json_path">Entity name (optional)</label>
+        <input type="text" class="form-control bkgStyle" id="entity_name" name="entity_name"
+               value="{{entities.name}}">
     </div>
     <div class="form-group">
         <label for="iri_template">IRI Template</label>
-        <input type="text" class="form-control" id="iri_template" name="iri_template"
+        <input type="text" class="form-control bkgStyle" id="iri_template" name="iri_template"
                value="{{entities.iri_template}}" required>
+    </div>
+    <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" class="form-control bkgStyle" id="type" name="type"
+               value="{{entities.type}}" required>
+    </div>
+    <div class="form-group">
+        <label for="include">Include</label>
+        <input type="text" class="form-control bkgStyle" id="include" name="include"
+               value="{{entities.include}}" required>
     </div>
     <input type="button" class="btn btn-primary" formnovalidate onclick="setEntityInput()" value="Add Entity">
 
@@ -76,6 +81,9 @@ const ENTITIES_TABLE_TEMPLATE = `
     <div class="w3-container">
         <ul class="w3-ul w3-card-4 list-entities">
             <li class="w3-display-container"><div class="paddingRL title">Path: {{@key}}</div></li>
+            <div class="paddingRL">Entity name (optional):</div>
+            <li class="w3-display-container"><input class="contentText trStyle form-control" type="text"
+                                                    value=""></li> <!-- TODO -->
             <div class="paddingRL">IRI template:</div>
             <li class="w3-display-container"><input class="contentText trStyle form-control" type="text"
                                                     value="{{iri_template}}"></li>

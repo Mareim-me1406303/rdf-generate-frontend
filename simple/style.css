@@ -58,7 +58,7 @@ th {
 .dialogHeader {
     padding: 5px 5px;
     font-size: 18px;
-    color: #245580;
+    color: #2F72AB;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -67,6 +67,8 @@ dialog {
     width: 600px;
     font-family:sans-serif;
     padding: 5px 10px 20px 20px;
+    background-color: #171717;
+    color: #cecece;
 }
 
 /* THE DRAMATIC ARROW */

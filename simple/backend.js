@@ -1108,7 +1108,6 @@ async function getDescriptor(jsonElement, baseDescriptor) {
 /** TODO: implement getOutput
  * Generates the final output!
  * @param {string} type - The type of the output (ttl or xml)
- * @param {Object} fullJson - The entire json file. If undefined, then it will only output the result based on the given item from getDescriptorNoPredicates() function.
  * @returns {Promise<string>} - The output!
  */
 async function getOutput(type) {

@@ -3,10 +3,9 @@ let des;
 let newDes;
 let filteredDes;
 
-let out;
 let editor;
+let out;
 
-let screens = [];
 let step = 0;
 const STEPS = 4;
 
